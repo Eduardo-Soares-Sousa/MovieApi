@@ -22,14 +22,14 @@ public class MovieService {
 
     public MovieEntity showingMovie(String title) {
         try {
-            MovieDto movieDto = movieClient.getMovie(title);
-
-            return movieRepository.save(movieConverter.converterToMovieEntity(movieDto));
+            return movieRepository.findByTitleIgnoreCase(title)
+                    .orElseGet(() -> {
+                        MovieDto movieDto = movieClient.getMovie(title);
+                        MovieEntity entity = movieConverter.converterToMovieEntity(movieDto);
+                        return movieRepository.save(entity);
+                    });
         }catch(RestClientException exception) {
-            throw new ServiceUnavailableException(
-                    "Communication error with the OMDb API "
-                    + exception.getMessage()
-            );
+            throw new ServiceUnavailableException("OMDb API is currently unavailable");
         }
     }
 

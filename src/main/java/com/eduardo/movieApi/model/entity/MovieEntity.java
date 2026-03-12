@@ -34,5 +34,5 @@ public class MovieEntity {
     private String actors;
     private String plot;
     private String poster;
-    private Boolean favorite = false;
+    private Boolean favorite;
 }

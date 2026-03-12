@@ -1,4 +1,4 @@
-package com.eduardo.movieApi.model.dto;
+package com.eduardo.movieApi.dto;
 
 public record MovieDto(
         String title,

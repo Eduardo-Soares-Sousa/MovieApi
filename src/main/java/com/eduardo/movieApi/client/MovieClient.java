@@ -5,7 +5,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
-import org.springframework.web.util.UriComponentsBuilder;
 
 @Component
 @RequiredArgsConstructor
@@ -16,13 +15,8 @@ public class MovieClient {
     private static final String BASE_URL = "http://www.omdbapi.com/";
 
     public MovieDto getMovie(String title) {
-        String url = UriComponentsBuilder
-                .fromUriString(BASE_URL)
-                .queryParam("apikey", apiKey)
-                .queryParam("t", title)
-                .queryParam("plot", "full")
-                .toUriString();
+        String url = BASE_URL + "?apikey={apikey}&t={title}&plot=full";
 
-        return restTemplate.getForObject(url, MovieDto.class);
+        return restTemplate.getForObject(url, MovieDto.class, apiKey, title);
     }
 }

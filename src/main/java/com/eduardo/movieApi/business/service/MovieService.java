@@ -25,6 +25,14 @@ public class MovieService {
             return movieRepository.findByTitleIgnoreCase(title)
                     .orElseGet(() -> {
                         MovieDto movieDto = movieClient.getMovie(title);
+                        if (movieDto.title() == null) {
+                            throw new MovieNotFoundException("Movie not found in OMDb");
+                        }
+
+                        if ("False".equalsIgnoreCase(movieDto.response())) {
+                            throw new MovieNotFoundException(movieDto.error());
+                        }
+
                         MovieEntity entity = movieConverter.converterToMovieEntity(movieDto);
                         return movieRepository.save(entity);
                     });

@@ -1,5 +1,6 @@
 package com.eduardo.movieApi.model.entity;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -23,15 +24,29 @@ public class MovieEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(length = 255)
     private String title;
-    private Integer year;
+
+    private String year;
     private String released;
     private String runtime;
+
+    @Column(length = 255)
     private String genre;
+
     private String director;
+
+    @Column(length = 500)
     private String writer;
+
+    @Column(length = 500)
     private String actors;
+
+    @Column(columnDefinition = "TEXT")
     private String plot;
+
+    @Column(length = 500)
     private String poster;
-    private Boolean favorite;
+
+    private boolean favorite;
 }
